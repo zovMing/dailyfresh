@@ -18,7 +18,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+<<<<<<< HEAD
     url(r'^user/', include('df_user.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('df_goods.urls')),
+=======
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
 ]

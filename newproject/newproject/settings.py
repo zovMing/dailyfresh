@@ -19,7 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+<<<<<<< HEAD
 # SECURITY WARNING: keep the secret key used in production secret!  
+=======
+# SECURITY WARNING: keep the secret key used in production secret!
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
 SECRET_KEY = 'etncbykqil_qtx*jnp7wl+p=c6%q7182f-h3xi)p6(pa5m%6j6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -37,9 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'df_user',
     'df_goods',
     'tinymce',
+=======
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,7 +65,11 @@ ROOT_URLCONF = 'newproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
+=======
+        'DIRS': [],
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,12 +90,17 @@ WSGI_APPLICATION = 'newproject.wsgi.application'
 
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tiantian',
         'USER':'root',
         'PASSWORD':'zxcvbnm,./',
         'HOST':'',
         'POST':3306
+=======
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
     }
 }
 
@@ -107,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,  'static')
 ]
@@ -118,3 +135,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+=======
+>>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
