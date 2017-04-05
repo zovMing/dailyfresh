@@ -1,5 +1,8 @@
 {% extends 'base_goods.html' %}
 
+{% block rel_head %}
+<script src='/static/js/detail.js'></script>
+{% endblock %}
 {% block body %}
 	<div class="navbar_con">
 		<div class="navbar clearfix">
@@ -40,18 +43,18 @@
 			<h3>{{good.gtitle}}</h3>
 			<p>{{good.gjianjie}}</p>
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em>{{good.gprice}}</em></span>
+				<span class="show_pirze">¥<em id='onecost'>{{good.gprice}}</em></span>
 				<span class="show_unit">单  位：{{good.gunit}}</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1">
-					<a href="javascript:;" class="add fr">+</a>
-					<a href="javascript:;" class="minus fr">-</a>	
+					<input type="text" class="num_show fl" id='wnum' value="1">
+					<a href="javascript:;" class="add fr" id='add'>+</a>
+					<a href="javascript:;" class="minus fr" id='reduce'>-</a>	
 				</div> 
 			</div>
-			<div class="total">总价：<em>16.80元</em></div>
+			<div class="total">总价：<em id='totalAll'>16.80元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				

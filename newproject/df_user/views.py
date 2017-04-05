@@ -3,18 +3,24 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from hashlib import sha1
 from . import models
+import df_goods
+
+
+
+def isLogin(func):
+    def afterFuck(request):
+        resp = redirect('/user/login')
+        username = request.session.get('username', '')
+        if username == "":
+            resp.set_cookie('url',request.get_full_path())
+            return resp
+        else:
+            return func(request)
+    return afterFuck
 
 def register(request):
     return render(request, 'user/register.html')
-def isLogin(func):
-    def afterFuck(request):
-        username = request.session.get('username', '')
-        if username == "":
-            return redirect('/user/login')
-        else:
-            print(username)
-            return func(request)
-    return afterFuck
+
 
 def register_handle(request):
     #获取表单内容
@@ -46,6 +52,12 @@ def register_name_handle(request):
     else:
         return JsonResponse({"res":"1"})
 
+def logout(request):
+    resp = redirect('/user/login')
+    resp.delete_cookie('url')
+    del request.session['username']
+    return resp
+
 def login(request):
     username = request.session.get('username','')
     if username != '':
@@ -74,6 +86,9 @@ def login_handle(request):
     username = post.get('username')
     pwd = post.get('pwd')
     isAuto = post.get('isAuto')
+    print(username)
+    print(pwd)
+    print('---------------------')
     try:
         user = models.userInfo.objects.get(username=username)
     except:
@@ -82,7 +97,13 @@ def login_handle(request):
         s1 = sha1()
         s1.update(pwd)
         if user.upwd ==  s1.hexdigest():
-            response = redirect( '/user/userInfo/')
+            response = ""
+            if request.COOKIES.has_key('url'):
+                print('qweqweqwe')
+                response = redirect(request.COOKIES.get('url'))
+            else:
+                print('asdasdasd')
+                response = redirect( '/user/userInfo/')
             if isAuto == "on":
                 response.set_cookie('username',str(username))
             else:
@@ -103,7 +124,20 @@ def userInfo(request):
         uaddress = "      "
     if uphone  == "":
         uphone = "      "
-    context = { 'uaddress':uaddress, 'uphone': uphone, 'username':username}
+    lastList = ''
+    if request.COOKIES.has_key('lastList'):
+        lastList = request.COOKIES.get('lastList')
+    olist = []
+    lastList = lastList.split(',')
+    if not ((len(lastList)==1) and (lastList[0]== '')):
+        for i in lastList:
+            try:
+                z = df_goods.models.GoodsInfo.objects.get(pk=i)
+            except df_goods.models.GoodsInfo.DoesNotExist:
+                pass
+            else:
+                olist.append(z)
+    context = { 'uaddress':uaddress, 'uphone': uphone, 'username':username, 'olist':olist}
     return render(request, 'user/user_center_info.html', context)
     
 @isLogin

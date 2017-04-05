@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'userSite/', views.userSite),
     url(r'userSite_handle/', views.userSite_handle),
     url(r'register_name_handle/', views.register_name_handle),
+    url(r'logout/', views.logout),
 ]

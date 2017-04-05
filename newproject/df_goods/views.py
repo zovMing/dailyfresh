@@ -36,8 +36,34 @@ def detail(request, id):
     except models.GoodsInfo.DoesNotExist:
         return HttpResponse('请不要乱来')
     else:
+        #讲id存入一个数组存入cookie中。
+        lastList = ''
+        if request.COOKIES.has_key('lastList'):
+            lastList = request.COOKIES.get('lastList')
+        lastList = getList(lastList, id)
         context = {'good':good, 'newgood':newgood}
-        return render(request, 'goods/detail.html', context)
+        reps = render(request, 'goods/detail.html', context)
+        reps.set_cookie('lastList', lastList)
+        return reps
+
+def getList(lst, x):
+    '''
+        讲最后一个id移除，新的id放在0下标的列表中。
+    '''
+    if lst == '':
+        lst += x
+        return lst
+    else:
+        lst = lst.split(',')
+        if x in lst:
+            lst.remove(x)
+        elif len(lst) < 5:
+            pass
+        else:
+            del lst[len(lst)-1]
+        lst.insert(0, x)
+    return ','.join(lst)
+
 
 def list(request, id, od, pagid):
     od = int(od)

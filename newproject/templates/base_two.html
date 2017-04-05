@@ -17,9 +17,15 @@
 					欢迎您：<em>张 山</em>
 				</div>
 				<div class="login_btn fl">
+					{% if request.session.username|default:'' != '' %}
+						欢迎你:  <a href="/user/userInfo/">{{request.session.username}}</a>
+					<span>|</span>
+					<a href="/user/logout/">注销</a>
+					{% else %}
 					<a href="/user/login/">登录</a>
 					<span>|</span>
 					<a href="/user/register/">注册</a>
+					{% endif %}
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
