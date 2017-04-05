@@ -41,12 +41,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'df_user',
     'df_goods',
     'tinymce',
-=======
->>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
 )
 
 MIDDLEWARE_CLASSES = (
