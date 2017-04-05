@@ -62,11 +62,7 @@ ROOT_URLCONF = 'newproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-<<<<<<< HEAD
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
-=======
-        'DIRS': [],
->>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,7 +116,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-<<<<<<< HEAD
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,  'static')
 ]
@@ -132,5 +127,3 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
-=======
->>>>>>> 26d75696146c693d9dc9db27451f5b916f058d22
