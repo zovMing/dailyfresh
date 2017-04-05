@@ -79,9 +79,8 @@ def login_handle(request):
             return response
         else:
             return login_error(request)
-           
-    
-def userInfo(request):  
+
+def userInfo(request):
     username = request.session.get('username')
     user = models.userInfo.objects.get(username=username)
     uaddress = user.uaddress
@@ -127,4 +126,6 @@ def userSite_handle(request):
     user.uphone = uphone
     user.uaddress = uaddress
     user.save()
+
+    
     return redirect('/user/userSite/')
