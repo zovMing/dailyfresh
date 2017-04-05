@@ -4,6 +4,8 @@ from . import models
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 
+
+
 def index(request):
     #获取十二个条信息，六个分类下每个分类两块数据：三个倒序id的，代表最新的。四个正序id，代表，，，没啥代表的
     fruits = models.GoodsInfo.objects.filter(gtype=1).order_by('-id')[0:3]

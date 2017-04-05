@@ -6,6 +6,15 @@ from . import models
 
 def register(request):
     return render(request, 'user/register.html')
+def isLogin(func):
+    def afterFuck(request):
+        username = request.session.get('username', '')
+        if username == "":
+            return redirect('/user/login')
+        else:
+            print(username)
+            return func(request)
+    return afterFuck
 
 def register_handle(request):
     #获取表单内容
@@ -38,6 +47,9 @@ def register_name_handle(request):
         return JsonResponse({"res":"1"})
 
 def login(request):
+    username = request.session.get('username','')
+    if username != '':
+        del request.session['username']
     username = ''
     isAuto = False
     if request.COOKIES.has_key('username'):
@@ -80,6 +92,8 @@ def login_handle(request):
         else:
             return login_error(request)
 
+
+@isLogin
 def userInfo(request):
     username = request.session.get('username')
     user = models.userInfo.objects.get(username=username)
@@ -91,10 +105,11 @@ def userInfo(request):
         uphone = "      "
     context = { 'uaddress':uaddress, 'uphone': uphone, 'username':username}
     return render(request, 'user/user_center_info.html', context)
-
+    
+@isLogin
 def userOrder(request):
     return render(request, 'user/user_center_order.html')
-
+@isLogin
 def userSite(request):
     username = request.session.get('username')
     user = models.userInfo.objects.get(username=username)
@@ -110,7 +125,8 @@ def userSite(request):
         uphone = uphone[:3] + '****' + uphone[6:]
     context = {'uman':uman, 'uaddress':uaddress, 'uphone': uphone, 'username':username}
     return render(request, 'user/user_center_site.html', context)
-
+    
+@isLogin
 def userSite_handle(request):
     #获取信息
     post = request.POST

@@ -118,3 +118,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
