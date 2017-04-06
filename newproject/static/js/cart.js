@@ -1,5 +1,6 @@
 $(function(){
     //全选以及全部不选择
+    allNumAdd();
     $("input[type='checkbox']").prop("checked",true);
      $("#allcheck").click(function(){
          if ( $("#allcheck").is(":checked")){
@@ -17,6 +18,7 @@ $(function(){
             }else{
                 $("#allcheck").removeAttr('checked');
             }
+            allNumAdd();
      })
 
 
