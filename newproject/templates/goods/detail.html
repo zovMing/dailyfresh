@@ -1,8 +1,9 @@
 {% extends 'base_goods.html' %}
 
-{% block rel_head %}
+{% block rel_foot %}
 <script src='/static/js/detail.js'></script>
 {% endblock %}
+
 {% block body %}
 	<div class="navbar_con">
 		<div class="navbar clearfix">
@@ -57,7 +58,7 @@
 			<div class="total">总价：<em id='totalAll'>16.80元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<a href="javascript:;" class="add_cart" id="add_cart" spid="{{good.id}}">加入购物车</a>				
 			</div>
 		</div>
 	</div>

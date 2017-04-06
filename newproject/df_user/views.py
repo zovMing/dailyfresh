@@ -59,6 +59,7 @@ def logout(request):
     return resp
 
 def login(request):
+        
     username = request.session.get('username','')
     if username != '':
         del request.session['username']
@@ -68,7 +69,11 @@ def login(request):
         username = request.COOKIES.get('username')
         isAuto = True
     context = {'username':username, 'isAuto':isAuto}
-    return render(request, 'user/login.html', context)
+    res = render(request, 'user/login.html', context)
+    gget = request.GET
+    if gget.get('no') == 1:
+        res.set_cookie('url',"")
+    return res
 
 def login_error(request):
     username = ''
@@ -86,9 +91,6 @@ def login_handle(request):
     username = post.get('username')
     pwd = post.get('pwd')
     isAuto = post.get('isAuto')
-    print(username)
-    print(pwd)
-    print('---------------------')
     try:
         user = models.userInfo.objects.get(username=username)
     except:

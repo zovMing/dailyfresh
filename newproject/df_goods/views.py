@@ -3,6 +3,7 @@ from django.shortcuts import render
 from . import models
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+import df_shopcart
 
 
 
@@ -25,8 +26,13 @@ def index(request):
     
     ices = models.GoodsInfo.objects.filter(gtype=6).order_by('-id')[0:3]
     iceLs = models.GoodsInfo.objects.filter(gtype=6).order_by('id')[0:4]
+    qwe = request.session.get('username', '')
+    goodcount = 0
+    if qwe != '':
+        goodcount = df_shopcart.models.shopcart.objects.filter(userinfo__username = qwe).count()
     
-    context = {'fruits':fruits, 'fruitLs':fruitLs, 'seafoods':seafoods,  'seafoodLs':seafoodLs, 'meets':meets, 'meetLs':meetLs, 'eggs':eggs, 'eggLs':eggLs, 'vegetabless':vegetabless, 'vegetablesLs':vegetablesLs, 'ices':ices, 'iceLs':iceLs}
+    
+    context = {'fruits':fruits, 'fruitLs':fruitLs, 'seafoods':seafoods,  'seafoodLs':seafoodLs, 'meets':meets, 'meetLs':meetLs, 'eggs':eggs, 'eggLs':eggLs, 'vegetabless':vegetabless, 'vegetablesLs':vegetablesLs, 'ices':ices, 'iceLs':iceLs, 'ct':goodcount}
     return render(request, 'goods/index.html', context)
 
 def detail(request, id):
@@ -41,14 +47,18 @@ def detail(request, id):
         if request.COOKIES.has_key('lastList'):
             lastList = request.COOKIES.get('lastList')
         lastList = getList(lastList, id)
-        context = {'good':good, 'newgood':newgood}
+        qwe = request.session.get('username', '')
+        goodcount = 0
+        if qwe != '':
+            goodcount = df_shopcart.models.shopcart.objects.filter(userinfo__username = qwe).count()
+        context = {'good':good, 'newgood':newgood, 'ct':goodcount}
         reps = render(request, 'goods/detail.html', context)
         reps.set_cookie('lastList', lastList)
         return reps
 
 def getList(lst, x):
     '''
-        讲最后一个id移除，新的id放在0下标的列表中。
+        将最后一个id移除，新的id放在0下标的列表中。
     '''
     if lst == '':
         lst += x
@@ -82,5 +92,9 @@ def list(request, id, od, pagid):
     pag = Paginator(goods, 15)
     pgoods = pag.page(pagid)
     pagrange = pag.page_range
-    context = {'pgoods':pgoods, 'pagrange':pagrange, 'newgoods':newgoods, 'pagid':pagid, 'od':od, 'id':id}
+    qwe = request.session.get('username', '')
+    goodcount = 0
+    if qwe != '':
+        goodcount = df_shopcart.models.shopcart.objects.filter(userinfo__username = qwe).count()
+    context = {'pgoods':pgoods, 'pagrange':pagrange, 'newgoods':newgoods, 'pagid':pagid, 'od':od, 'id':id, 'ct':goodcount}
     return render(request, 'goods/list.html', context)

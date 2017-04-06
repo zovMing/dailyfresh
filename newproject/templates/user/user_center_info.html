@@ -1,7 +1,40 @@
 {% extends 'base_two.html' %}
 
-{% block body %}
 
+{% block rel_style %}
+<script src='/static/js/jquery-1.12.4.min.js'>	</script>
+<script src='/static/js/csrf.js'>	</script>
+<script>	</script>
+
+<script>
+	$(function(){
+		$('.add_goods').click(function(){
+			$.ajax({
+            url:'/shopcart/add/',
+            data:{'sid':$(".add_goods").attr('spid'), 'snum':1,'go':'1'},
+            dataType:'json',
+            type:'POST',
+            success:function(data){
+				if (data.nologin=='1'){
+					location.href='/user/login/?no=1'
+					return false;
+				}
+       	         if(data.s){
+					location.href=data.ress
+                }else{
+                    console.log('data error');
+                }
+            },
+            error:function(){
+                    console.log('network error');
+            }
+        });
+		})
+	})
+</script>
+{% endblock %}
+
+{% block body %}
 	<div class="main_con clearfix">
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
@@ -32,7 +65,7 @@
 					<div class="operate">
 						<span class="prize">￥{{i.gprice}}</span>
 						<span class="unit">{{i.gprice}}/{{i.gunit}}</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
+						<a href="#" class="add_goods" spid='{{i.id}}' title="加入购物车"></a>
 					</div>
 				</li>
 				{% endfor %}
