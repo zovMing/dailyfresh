@@ -1,40 +1,31 @@
-<!--天天生鲜-商品详情-->
-
+<!--天天生鲜-提交订单-->
 {% extends "base_two.html" %}
 
 {% block bodyprev1 %}
-	<div class="search_bar clearfix">
+<div class="search_bar clearfix">
 		<a href="index.html" class="logo fl"><img src="/static/images/logo.png"></a>
-		<div class="search_con fl">
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;提交订单</div>
+		<div class="search_con fr">
 			<form method='get' action="/search/" target="_blank">
 			<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
 			<input type="submit" class="input_btn fr" name="" value="搜索">
 			</form>
-		</div>
-		<div class="guest_cart fr">
-			<a href="/shopcart/" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count">{{ct}}</div>
-		</div>
+		</div>		
 	</div>
 {% endblock %}
 
 {% block body %}
 {% endblock %}
 
-
-
-
-
 {% block body3 %}
-
-	<div class="add_jump"></div>
-
+	<div class="popup_con">
+		<div class="popup">
+			<p>订单提交成功！</p>
+		</div>
+		
+		<div class="mask"></div>
+	</div>
 {% endblock %}
 
-
-	{% block rel_foot %}
-
-    
-    {% endblock %}
-</body>
-</html>
+{% block srcript_foot %}
+{% endblock %}

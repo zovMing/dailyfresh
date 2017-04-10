@@ -2,20 +2,22 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from hashlib import sha1
+from django.core.paginator import Paginator
 from . import models
 import df_goods
+import df_order
 
 
 
 def isLogin(func):
-    def afterFuck(request):
+    def afterFuck(request,*w,**kwg):
         resp = redirect('/user/login')
         username = request.session.get('username', '')
         if username == "":
             resp.set_cookie('url',request.get_full_path())
             return resp
         else:
-            return func(request)
+            return func(request,*w,**kwg)
     return afterFuck
 
 def register(request):
@@ -143,8 +145,28 @@ def userInfo(request):
     return render(request, 'user/user_center_info.html', context)
     
 @isLogin
-def userOrder(request):
-    return render(request, 'user/user_center_order.html')
+def userOrder(request, id):
+    if id == '' :
+        id = 1
+    username = request.session.get('username')
+    allOrder = df_order.models.OrderInfo.objects.filter(user__username = username)
+    pg = Paginator(allOrder, 2)
+    if int(id) >= pg.page_range[-1]:
+        id = pg.page_range[-1]
+    lst = pg.page(int(id)) 
+    allLst = []
+    for i in lst:
+        z = [i]
+        allLst.append(z)
+    for i in allLst:
+        i.append(df_order.models.OrderDetailInfo.objects.filter(order_id = i[0].oid))
+        i.append(df_order.models.OrderDetailInfo.objects.filter(order_id = i[0].oid))
+    rrange = pg.page_range
+    context = {'allLst':allLst, 'rrange':rrange, 'iid':str(id)}
+    return render(request, 'user/user_center_order.html', context)
+
+
+
 @isLogin
 def userSite(request):
     username = request.session.get('username')

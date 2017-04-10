@@ -98,3 +98,4 @@ def list(request, id, od, pagid):
         goodcount = df_shopcart.models.shopcart.objects.filter(userinfo__username = qwe).count()
     context = {'pgoods':pgoods, 'pagrange':pagrange, 'newgoods':newgoods, 'pagid':pagid, 'od':od, 'id':id, 'ct':goodcount}
     return render(request, 'goods/list.html', context)
+

@@ -1,3 +1,4 @@
+#coding=utf-8
 """
 Django settings for newproject project.
 
@@ -41,6 +42,8 @@ INSTALLED_APPS = (
     'df_goods',
     'tinymce',
     'df_shopcart',
+    'df_order',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,3 +124,14 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+HAYSTACK_CONNECTIONS = {
+    'default':{
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+#自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+#每页数量
+HAYSTACK_SEARCH_RESULTS_PER_PAGE=18
